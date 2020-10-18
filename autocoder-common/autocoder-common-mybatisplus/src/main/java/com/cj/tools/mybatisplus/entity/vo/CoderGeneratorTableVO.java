@@ -1,4 +1,4 @@
-package com.cj.tools.mybatisplus.dynamic;
+package com.cj.tools.mybatisplus.entity.vo;
 
 import lombok.Data;
 

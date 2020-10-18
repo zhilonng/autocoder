@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cj.tools.mapper.CesFieldKongjMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cj.tools.entity.CesFieldKongj">
+        <id column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="sys_org_code" property="sysOrgCode" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="radio" property="radio" />
+        <result column="checkbox" property="checkbox" />
+        <result column="sel_mut" property="selMut" />
+        <result column="sel_search" property="selSearch" />
+        <result column="birthday" property="birthday" />
+        <result column="pic" property="pic" />
+        <result column="files" property="files" />
+        <result column="remakr" property="remakr" />
+        <result column="fuwenb" property="fuwenb" />
+        <result column="user_sel" property="userSel" />
+        <result column="dep_sel" property="depSel" />
+        <result column="ddd" property="ddd" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, create_by, create_time, update_by, update_time, sys_org_code, name, sex, radio, checkbox, sel_mut, sel_search, birthday, pic, files, remakr, fuwenb, user_sel, dep_sel, ddd
+    </sql>
+
+</mapper>

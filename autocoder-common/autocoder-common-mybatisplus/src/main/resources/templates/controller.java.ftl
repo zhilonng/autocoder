@@ -2,7 +2,7 @@ package ${package.Controller};
 
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
-import com.自己的工具包.RetJson;
+import com.cj.tools.autocoderserver.base.base.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -36,7 +36,7 @@ import java.util.List;
 <#else>
  @Controller
 </#if>
-@RequestMapping("<#if package.ModuleName??>/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+@RequestMapping("<#if package.ModuleName??>${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
 <#if kotlin>
  class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>
@@ -59,7 +59,7 @@ import java.util.List;
  public  Object list(@Valid @RequestBody ${entity} param) {
 
  Object data = ${table.serviceName?uncap_first}.page(param);
- return RetJson.ok(data);
+ return Response.success(data);
  }
 
  @ApiOperation(value = "${table.comment}详情", response = ${entity}.class)
@@ -67,7 +67,7 @@ import java.util.List;
  public  Object info(@PathVariable Long id) {
 
  Object data = ${table.serviceName?uncap_first}.info(id);
- return RetJson.ok(data);
+ return Response.success(data);
  }
 
  @ApiOperation(value = "${table.comment}新增")
@@ -75,7 +75,7 @@ import java.util.List;
  public  Object add(@Valid @RequestBody ${entity} param) {
 
  ${table.serviceName?uncap_first}.add(param);
- return RetJson.ok();
+ return Response.success();
  }
 
  @ApiOperation(value = "${table.comment}修改")
@@ -83,7 +83,7 @@ import java.util.List;
  public  Object modify(@Valid @RequestBody ${entity} param) {
 
  ${table.serviceName?uncap_first}.modify(param);
- return RetJson.ok();
+ return Response.success();
  }
 
  @ApiOperation(value = "${table.comment}删除(单个条目)")
@@ -91,7 +91,7 @@ import java.util.List;
  public  Object remove(@PathVariable Long id) {
 
  ${table.serviceName?uncap_first}.remove(id);
- return RetJson.ok();
+ return Response.success();
  }
 
  @ApiOperation(value = "${table.comment}删除(多个条目)")
@@ -99,7 +99,7 @@ import java.util.List;
  public  Object removes(@Valid @RequestBody List<Long> ids) {
 
  ${table.serviceName?uncap_first}.removes(ids);
- return RetJson.ok();
+ return Response.success();
  }
 
  }

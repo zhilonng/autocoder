@@ -1,4 +1,4 @@
-package com.cj.tools.mybatisplus.dynamic;
+package com.cj.tools.mybatisplus.entity.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

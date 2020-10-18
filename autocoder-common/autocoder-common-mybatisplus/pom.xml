@@ -12,7 +12,7 @@
     <version>1.0.0</version>
     <name>autocoder-common-mybatisplus</name>
     <description>Demo project for Spring Boot</description>
-
+    <packaging>jar</packaging>
     <properties>
         <java.version>1.8</java.version>
     </properties>

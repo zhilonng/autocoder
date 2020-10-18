@@ -1,6 +1,7 @@
 package com.cj.tools.mybatisplus.dynamic;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
@@ -8,6 +9,8 @@ import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.cj.tools.mybatisplus.entity.vo.CoderGeneratorPathVO;
+import com.cj.tools.mybatisplus.entity.vo.CoderGeneratorTableVO;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,12 +68,12 @@ public class CoderGenerator extends AutoGenerator {
 
         private CoderGeneratorBuilder(CoderGeneratorPathVO coderGeneratorPathVO) {
             this.projectPath = coderGeneratorPathVO.getProjectPath();
-            this.entityOutputPath = coderGeneratorPathVO.getEntityOutputPath();
-            this.mapperOutputPath = coderGeneratorPathVO.getMapperOutputPath();
-            this.daoOutputPath = coderGeneratorPathVO.getDaoOutputPath();
-            this.xmlOutputPath = coderGeneratorPathVO.getXmlOutputPath();
-            this.serviceOutputPath = coderGeneratorPathVO.getServiceOutputPath();
-            this.controllerOutputPath = coderGeneratorPathVO.getControllerOutputPath();
+            this.entityOutputPath = coderGeneratorPathVO.getEntityOutputPath() + "entity/";
+            this.mapperOutputPath = coderGeneratorPathVO.getMapperOutputPath() + "mapper/";
+            this.daoOutputPath = coderGeneratorPathVO.getDaoOutputPath() + "dao/";
+            this.xmlOutputPath = coderGeneratorPathVO.getXmlOutputPath() + "xml/";
+            this.serviceOutputPath = coderGeneratorPathVO.getServiceOutputPath() + "service/";
+            this.controllerOutputPath = coderGeneratorPathVO.getControllerOutputPath() + "controller/";
             this.injectionConfig = injectionConfig();
 //            this.fileOutConfigList = this.fileOutConfigList();
         }
@@ -85,6 +88,15 @@ public class CoderGenerator extends AutoGenerator {
             dataSourceConfig.setDriverName(driverName);
             dataSourceConfig.setUsername(username);
             dataSourceConfig.setPassword(password);
+            return this;
+        }
+
+        public CoderGenerator.CoderGeneratorBuilder dataSourceConfig(DataSourceConfig dataSourceConfig) {
+            this.dataSourceConfig = new DataSourceConfig();
+            this.dataSourceConfig.setUrl(dataSourceConfig.getUrl());
+            this.dataSourceConfig.setDriverName(dataSourceConfig.getDriverName());
+            this.dataSourceConfig.setUsername(dataSourceConfig.getUsername());
+            this.dataSourceConfig.setPassword(dataSourceConfig.getPassword());
             return this;
         }
 
@@ -228,47 +240,59 @@ public class CoderGenerator extends AutoGenerator {
             List<FileOutConfig> list = new ArrayList<>();
 
             // 实体类文件输出
-            list.add(new FileOutConfig(ENTITY_TEMPLATE) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return entityOutputPath + tableInfo.getEntityName() + StringPool.DOT_JAVA;
-                }
-            });
+            if (StringUtils.isNotBlank(entityOutputPath)) {
+                list.add(new FileOutConfig(ENTITY_TEMPLATE) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return entityOutputPath + tableInfo.getEntityName() + StringPool.DOT_JAVA;
+                    }
+                });
+            }
             // mapper xml文件输出
-            list.add(new FileOutConfig(XML_TEMPLATE) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return xmlOutputPath + tableInfo.getMapperName() + StringPool.DOT_XML;
-                }
-            });
+            if (StringUtils.isNotBlank(xmlOutputPath)) {
+                list.add(new FileOutConfig(XML_TEMPLATE) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return xmlOutputPath + tableInfo.getMapperName() + StringPool.DOT_XML;
+                    }
+                });
+            }
             // mapper文件输出
-            list.add(new FileOutConfig(MAPPER_TEMPLATE) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return mapperOutputPath + tableInfo.getMapperName() + StringPool.DOT_JAVA;
-                }
-            });
+            if (StringUtils.isNotBlank(mapperOutputPath)) {
+                list.add(new FileOutConfig(MAPPER_TEMPLATE) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return mapperOutputPath + tableInfo.getMapperName() + StringPool.DOT_JAVA;
+                    }
+                });
+            }
             // service文件输出
-            list.add(new FileOutConfig(SERVICE_TEMPLATE) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return serviceOutputPath + tableInfo.getServiceName() + StringPool.DOT_JAVA;
-                }
-            });
+            if (StringUtils.isNotBlank(serviceOutputPath)) {
+                list.add(new FileOutConfig(SERVICE_TEMPLATE) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return serviceOutputPath + tableInfo.getServiceName() + StringPool.DOT_JAVA;
+                    }
+                });
+            }
             // service impl文件输出
-            list.add(new FileOutConfig(SERVICE_IMPL_TEMPLATE) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return serviceOutputPath + tableInfo.getServiceImplName() + StringPool.DOT_JAVA;
-                }
-            });
+            if (StringUtils.isNotBlank(serviceOutputPath)) {
+                list.add(new FileOutConfig(SERVICE_IMPL_TEMPLATE) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return serviceOutputPath + "impl/" + tableInfo.getServiceImplName() + StringPool.DOT_JAVA;
+                    }
+                });
+            }
             // controller文件输出
-            list.add(new FileOutConfig(CONTROLLER_TEMPLATE) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return controllerOutputPath + tableInfo.getControllerName() + StringPool.DOT_JAVA;
-                }
-            });
+            if (StringUtils.isNotBlank(controllerOutputPath)) {
+                list.add(new FileOutConfig(CONTROLLER_TEMPLATE) {
+                    @Override
+                    public String outputFile(TableInfo tableInfo) {
+                        return controllerOutputPath + tableInfo.getControllerName() + StringPool.DOT_JAVA;
+                    }
+                });
+            }
 
             return list;
         }
